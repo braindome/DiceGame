@@ -7,8 +7,8 @@ public class Player {
 
     public Player(String s) {
         this.name = s;
-        this.points = points;
-        this.diceList = diceList;
+        //this.points = points;
+
     }
 
     public void rollDice() {
@@ -34,13 +34,6 @@ public class Player {
         diceList.add(newDie);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getPoints() {
         return points;
