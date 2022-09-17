@@ -21,7 +21,7 @@ public class Die {
         return currentValue;
     }
 
-    public int getNumberOfSides() {
+    public int getNumberOfFaces() {
         return numberOfFaces;
     }
 }

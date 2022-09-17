@@ -1,3 +1,4 @@
+import javax.naming.PartialResultException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,6 +6,7 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
 
+        //The player list is initialized. Game method is invoked five times.
         ArrayList<Player> playerList = initialize();
         takeTurn(playerList);
         takeTurn(playerList);
@@ -16,6 +18,7 @@ public class Main {
 
     private static ArrayList<Player> initialize() {
 
+        //Initialize object list and int variables. Input is requested.
         ArrayList<Player> playerList = new ArrayList<>();
         System.out.println("Enter number of players:");
         int playerNumber = sc.nextInt();
@@ -24,7 +27,9 @@ public class Main {
         System.out.println("Enter number of dice faces:");
         int diceFaces = sc.nextInt();
 
+
         sc.nextLine();
+        //This loop assigns a player ID, depending on the number of players.
         for ( int i = 0; i < playerNumber; i++) {
             System.out.println("Enter Player " + (i+1) + " name:");
             String name = sc.nextLine();
@@ -37,10 +42,12 @@ public class Main {
         return playerList;
     }
 
+    //Rolls the dice(s) for each player, takes in a guess and compares it with the rolled number.
+    //Added a print for testing (commented out)
     private static void takeTurn(ArrayList<Player> players) {
         for (Player p : players) {
             p.rollDice();
-            System.out.println("Psssst hint: " + p.getDieValue());
+            //System.out.println("Psssst hint: " + p.getDieValue());
             System.out.println(p + ", guess a number:");
             int guess = sc.nextInt();
             if (guess == p.getDieValue()) {
@@ -53,17 +60,38 @@ public class Main {
         }
     }
 
+    //Creates a list of winner(s) and prints it.
     private static ArrayList<Player> getWinners(ArrayList<Player> players) {
-        ArrayList<Integer> scoreBoard = new ArrayList<>();
         int topScore = 0;
-        System.out.println("Score summary:");
+        ArrayList<Player> winners = new ArrayList<>();
+        //The for loop goes through the player list and assigns a top score.
         for (Player p : players) {
-            System.out.println(p + "  " + p.getPoints());
-            scoreBoard.add(p.getPoints());
+            if (p.getPoints() > topScore) {
+                topScore = p.getPoints();
+                }
+            }
+        //Then the if statement adds the highest score connected to the object to the winner list by going again through
+        //all the players in the players list.
+        if (topScore > 0) {
+            for (Player p : players) {
+                if (p.getPoints() == topScore) {
+                    winners.add(p);
+                }
+            }
         }
+        //Conditional statments depending on the outcome of the game.
+        if (winners.size() == 0) {
+            System.out.println("You are all failures");
+        } else if (winners.size() == 1) {
+            System.out.println("And the winner is: " + winners);
+        } else {
+            System.out.println("We have a tie! The winners are " + winners);
+        }
+        return winners;
 
 
-        return players;
     }
 
+
 }
+
